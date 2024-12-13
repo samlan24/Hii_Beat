@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Analyze.module.css'
+import styles from './Analyze.module.css'
 
 const AnalyzePage = () => {
   const [file, setFile] = useState(null);
@@ -40,8 +40,8 @@ const AnalyzePage = () => {
   };
 
   return (
-    <div>
-      <h1 className='heading'>BPM Analysis</h1>
+    <div className={styles.analyze}>
+      <h1>BPM Analysis</h1>
       <form onSubmit={handleSubmit}>
         <input type="file" onChange={handleFileChange} />
         <button type="submit">Analyze</button>

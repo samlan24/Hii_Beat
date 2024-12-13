@@ -41,7 +41,7 @@ const ConvertAudio = () => {
     };
 
     return (
-      <div>
+      <div className={styles.convert}>
         <h1>Convert MP3 to WAV</h1>
         <form onSubmit={handleSubmit}>
           <input type="file" accept="audio/mp3" onChange={handleFileChange} />

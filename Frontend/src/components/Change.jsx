@@ -45,7 +45,7 @@ const ChangeBpmPage = () => {
   };
 
   return (
-    <div>
+    <div className={styles.change}>
       <h1 className={styles.heading}>Change Audio BPM and Pitch</h1>
       <form onSubmit={handleSubmit}>
         <input type="file" accept="audio/*" onChange={handleFileChange} />
