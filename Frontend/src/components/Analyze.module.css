@@ -3,4 +3,21 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100vh;
+}
+
+.results{
+    display: flex;
+    background-color: aqua;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+.analyzeContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
