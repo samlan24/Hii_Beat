@@ -2,11 +2,11 @@ from flask import Flask
 from flask_cors import CORS
 import os
 
-app = Flask(__name__)
-CORS(app)
-
-
 def create_app():
+    app = Flask(__name__)
+    CORS(app)
+
+
 
     # Define the upload folder path
     UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
@@ -33,11 +33,4 @@ def create_app():
     from .conversion import conversion
     app.register_blueprint(conversion)
 
-    from .spleeter import spleeter
-    app.register_blueprint(spleeter)
-
     return app
-
-
-
-
