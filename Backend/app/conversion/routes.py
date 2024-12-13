@@ -52,4 +52,15 @@ def download(filename):
     if not os.path.exists(filepath):
         return jsonify({"error": "File not found"}), 404
 
-    return send_file(filepath, as_attachment=True)
+    try:
+        # Send the file as a response
+        response = send_file(filepath, as_attachment=True)
+
+        # Schedule file removal after the response is closed
+        response.call_on_close(lambda: os.remove(filepath) if os.path.exists(filepath) else None)
+
+        logging.debug(f"File sent for download and scheduled for deletion: {filepath}")
+        return response
+    except Exception as e:
+        logging.error(f"Error sending file: {e}")
+        return jsonify({"error": f"Error sending file: {e}"}), 500

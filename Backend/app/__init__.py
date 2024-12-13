@@ -9,7 +9,7 @@ CORS(app)
 def create_app():
 
     # Define the upload folder path
-    UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')  # Adjust based on your structure
+    UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     CONVERT_FOLDER = os.path.join(app.root_path, 'static', 'converted')
     app.config['CONVERT_FOLDER'] = CONVERT_FOLDER
