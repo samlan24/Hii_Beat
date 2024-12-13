@@ -33,6 +33,9 @@ def create_app():
     from .conversion import conversion
     app.register_blueprint(conversion)
 
+    from .spleeter import spleeter
+    app.register_blueprint(spleeter)
+
     return app
 
 
