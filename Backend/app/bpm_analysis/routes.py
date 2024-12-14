@@ -1,18 +1,39 @@
-from flask import Flask, request, jsonify, current_app
+from flask import Flask, request, jsonify, current_app, session
 from werkzeug.utils import secure_filename
 from . import bpm
-import essentia
 import essentia.standard as es
+from datetime import datetime, timedelta
 import os
-
 
 ALLOWED_EXTENSIONS = {'wav', 'mp3', 'flac'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@bpm.route('/analyze', methods=['POST', 'GET'])
+@bpm.route('/analyze', methods=['POST'])
 def analyze():
+    # Check if the session ID exists; if not, create one
+    if 'session_id' not in session:
+        session['session_id'] = os.urandom(16).hex()  # Generate a new session ID
+    session_id = session['session_id']
+
+    db = current_app.config['db']
+    uploads_collection = db.uploads
+
+    now = datetime.utcnow()
+    one_day_ago = now - timedelta(days=1)
+
+    # Query the user's uploads in the last 24 hours
+    recent_uploads = list(uploads_collection.find({
+        "session_id": session_id,
+        "timestamp": {"$gte": one_day_ago}
+    }))
+
+    # Check if user has exceeded the daily limit
+    if len(recent_uploads) >= 5:
+        return jsonify({"error": "Daily upload limit reached. Try again tomorrow."}), 403
+
+    # Process the uploaded file
     if 'file' not in request.files:
         return jsonify({"error": "No file uploaded"}), 400
 
@@ -22,15 +43,15 @@ def analyze():
         return jsonify({"error": "Invalid file type"}), 400
 
     filename = secure_filename(file.filename)
-    file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)  # Accessing upload folder from config
+    file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
     file.save(file_path)
 
     try:
-        # Perform BPM and key analysis here...
+        # Perform BPM and key analysis
         audio = es.MonoLoader(filename=file_path)()
         rhythm_extractor = es.RhythmExtractor2013(method="multifeature")
-        bpm, beats, beats_confidence, _, beats_intervals = rhythm_extractor(audio)
-        rounded_bpm = round(bpm)
+        bpm_value, beats, beats_confidence, _, beats_intervals = rhythm_extractor(audio)
+        rounded_bpm = round(bpm_value)
         key_extractor = es.KeyExtractor()
         key, scale, strength = key_extractor(audio)
 
@@ -39,10 +60,16 @@ def analyze():
             "Key": key
         }
 
+        # Add the current upload to MongoDB
+        uploads_collection.insert_one({
+            "session_id": session_id,
+            "timestamp": now,
+            "filename": filename
+        })
+
     finally:
-        # Cleanup: Remove the uploaded file after processing
+        # Cleanup the uploaded file
         if os.path.exists(file_path):
             os.remove(file_path)
 
     return jsonify(result_data)
-

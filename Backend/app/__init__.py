@@ -1,12 +1,21 @@
 from flask import Flask
 from flask_cors import CORS
+from pymongo import MongoClient
 import os
+
+
+mongo_client = None
 
 def create_app():
     app = Flask(__name__)
     CORS(app)
 
+    app.secret_key = "hello"
 
+    # Connect to MongoDB
+    MONGO_URI = "mongodb://localhost:27017/music"
+    client = MongoClient(MONGO_URI)
+    app.config['db'] = client.get_database('music')
 
     # Define the upload folder path
     UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
