@@ -1,14 +1,10 @@
-// src/components/ChangeAudio.jsx
-
 import React, { useState } from 'react';
 import axios from 'axios';
-import styles from './Change.module.css'
+import styles from './Change.module.css';
 
-
-const ChangeBpmPage = () => {
+const ChangeAudioPage = () => {
   const [file, setFile] = useState(null);
-  const [bpmFactor, setBpmFactor] = useState(1.0);
-  const [pitchSteps, setPitchSteps] = useState(0);
+  const [transposeSteps, setTransposeSteps] = useState(0);  // Default to no transpose
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
 
@@ -26,11 +22,10 @@ const ChangeBpmPage = () => {
 
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('bpm_factor', bpmFactor);
-    formData.append('pitch_steps', pitchSteps);
+    formData.append('transpose_steps', transposeSteps);
 
     try {
-      const response = await axios.post('http://localhost:5000/change', formData, {
+      const response = await axios.post('http://localhost:5000/transpose', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -46,27 +41,18 @@ const ChangeBpmPage = () => {
 
   return (
     <div className={styles.change}>
-      <h1 className={styles.heading}>Change Audio BPM and Pitch</h1>
+      <h1 className={styles.heading}>Transpose Audio</h1>
       <form onSubmit={handleSubmit}>
-        <input type="file" accept="audio/*" onChange={handleFileChange} />
+        <input type="file" accept="audio/mp3, audio/wav" onChange={handleFileChange} />
         <div>
-          <label>BPM Factor:</label>
+          <label>Transpose Steps (+/-):</label>
           <input
             type="number"
-            step="0.1"
-            value={bpmFactor}
-            onChange={(e) => setBpmFactor(parseFloat(e.target.value))}
+            value={transposeSteps}
+            onChange={(e) => setTransposeSteps(parseInt(e.target.value))}
           />
         </div>
-        <div>
-          <label>Pitch Steps:</label>
-          <input
-            type="number"
-            value={pitchSteps}
-            onChange={(e) => setPitchSteps(parseInt(e.target.value))}
-          />
-        </div>
-        <button type="submit">Change Audio</button>
+        <button type="submit">Transpose Audio</button>
       </form>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -82,4 +68,4 @@ const ChangeBpmPage = () => {
   );
 };
 
-export default ChangeBpmPage;
+export default ChangeAudioPage;
