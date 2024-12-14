@@ -2,7 +2,6 @@ import os
 from flask import Blueprint, request, jsonify, send_file, current_app
 import librosa
 import soundfile as sf
-from pydub import AudioSegment
 
 from . import bpm_change
 
@@ -34,17 +33,11 @@ def transpose():
         output_filename = os.path.splitext(file.filename)[0] + '_transposed' + os.path.splitext(file.filename)[1]
         output_filepath = os.path.join(current_app.config['CONVERT_FOLDER'], output_filename)
 
-        # Save the modified file
+        # Save the modified file in the same format as the input (WAV or MP3)
         if file.filename.endswith('.wav'):
             sf.write(output_filepath, y_transposed, sr, format='WAV')
         elif file.filename.endswith('.mp3'):
-            # Convert the WAV result to MP3 using pydub (avoid lossy re-encoding from MP3 to MP3)
-            temp_wav = os.path.join(current_app.config['CONVERT_FOLDER'], 'temp.wav')
-            sf.write(temp_wav, y_transposed, sr, format='WAV')
-            # Use pydub to convert WAV to MP3 without loss in quality
-            audio = AudioSegment.from_wav(temp_wav)
-            audio.export(output_filepath, format='mp3')
-            os.remove(temp_wav)  # Clean up the temporary WAV file
+            sf.write(output_filepath, y_transposed, sr, format='MP3')
 
     except Exception as e:
         return jsonify({"error": f"Error transposing audio: {e}"}), 500
