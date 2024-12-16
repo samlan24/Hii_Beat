@@ -1,8 +1,9 @@
 import os
 import logging
-from flask import Blueprint, request, jsonify, send_file, current_app
+from flask import Blueprint, request, jsonify, send_file, session, current_app
 from pydub import AudioSegment
 from . import conversion
+from app.utils.sessions_utils import check_daily_limit  # Import the helper function
 
 @conversion.route('/convert', methods=['POST'])
 def convert_mp3_to_wav():
@@ -10,6 +11,10 @@ def convert_mp3_to_wav():
         return jsonify({"error": "No file uploaded"}), 400
 
     file = request.files['file']
+
+    # Check if the user has exceeded the daily upload limit
+    if not check_daily_limit():  # No need to pass session_id as it's handled in the function
+        return jsonify({"error": "Daily upload limit reached. Try again tomorrow."}), 403
 
     # Save uploaded MP3 file temporarily in UPLOAD_FOLDER
     uploaded_filename = os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename)
