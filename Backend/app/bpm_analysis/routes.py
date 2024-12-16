@@ -31,7 +31,7 @@ def analyze():
     }))
 
     # Check if user has exceeded the daily limit
-    if len(recent_uploads) >= 5:
+    if len(recent_uploads) >= 2:
         return jsonify({"error": "Daily upload limit reached. Try again tomorrow."}), 403
 
     # Process the uploaded file
