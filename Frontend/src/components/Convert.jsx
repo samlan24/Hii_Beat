@@ -30,6 +30,7 @@ const ConvertAudio = () => {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        withCredentials: true,
       });
       setResult(response.data);
       setError('');
