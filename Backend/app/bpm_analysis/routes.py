@@ -2,8 +2,9 @@ from flask import request, jsonify, current_app, session
 from werkzeug.utils import secure_filename
 from . import bpm
 import essentia.standard as es
-from datetime import datetime, timedelta
+from datetime import datetime
 import os
+ # Import the helper function
 
 ALLOWED_EXTENSIONS = {'wav', 'mp3', 'flac'}
 
@@ -12,26 +13,14 @@ def allowed_file(filename):
 
 @bpm.route('/analyze', methods=['POST'])
 def analyze():
+
+    from app.utils.sessions_utils import check_daily_limit
+
     db = current_app.config['db']
     uploads_collection = db.uploads
-    now = datetime.utcnow()
 
-    # Check if the session ID exists; if not, create one (handled by Flask-Session)
-    session_id = session.get('session_id')
-    if not session_id:
-        session_id = os.urandom(16).hex()  # Generate a new session ID
-        session['session_id'] = session_id  # Save the session ID in the session
-
-    one_day_ago = now - timedelta(days=1)
-
-    # Query the user's uploads in the last 24 hours
-    recent_uploads = list(uploads_collection.find({
-        "session_id": session_id,
-        "timestamp": {"$gte": one_day_ago}
-    }))
-
-    # Check if user has exceeded the daily limit
-    if len(recent_uploads) >= 2:
+    # Check if user has exceeded the daily upload limit using the helper function
+    if not check_daily_limit():  # This will handle session ID creation and limit checking
         return jsonify({"error": "Daily upload limit reached. Try again tomorrow."}), 403
 
     # Process the uploaded file
@@ -56,16 +45,20 @@ def analyze():
         rounded_bpm = round(bpm_value)
         key_extractor = es.KeyExtractor()
         key, scale, strength = key_extractor(audio)
+
         result_data = {
             "BPM": rounded_bpm,
             "Key": key
         }
+
         # Add the current upload to MongoDB
+        session_id = session.get('session_id')  # Get session ID from session
         uploads_collection.insert_one({
             "session_id": session_id,
-            "timestamp": now,
+            "timestamp": datetime.utcnow(),
             "filename": filename
         })
+
     finally:
         # Cleanup the uploaded file
         if os.path.exists(file_path):
