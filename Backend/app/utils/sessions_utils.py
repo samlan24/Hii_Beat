@@ -21,4 +21,4 @@ def check_daily_limit():
     }))
 
     # Check if user has exceeded the daily limit
-    return len(recent_uploads) < 10
+    return len(recent_uploads) < 1000
