@@ -1,12 +1,10 @@
-// src/components/AnalyzePage.jsx
-
 import React, { useState } from 'react';
 import axios from 'axios';
-import styles from './Analyze.module.css'
+import styles from './Analyze.module.css';
 
 const AnalyzePage = () => {
   const [file, setFile] = useState(null);
-  const [result, setResult] = useState(null);
+  const [results, setResults] = useState([]);  // Change to an array to store multiple results
   const [error, setError] = useState('');
 
   const handleFileChange = (event) => {
@@ -31,12 +29,11 @@ const AnalyzePage = () => {
         },
         withCredentials: true,
       });
-      setResult(response.data);
+      setResults((prevResults) => [...prevResults, response.data]);  // Append new result to the array
       setError('');
     } catch (err) {
       console.log('There was an error fetching the data:', err);
       setError(err.response?.data?.error || 'An error occurred');
-      setResult(null);
     }
   };
 
@@ -44,25 +41,28 @@ const AnalyzePage = () => {
     <div>
       <div className={styles.analyze}>
         <div>
-        <h1>Song Key & BPM Finder</h1>
-        <p>Upload your audio files to find the key and tempo of the tracks in your library.
-          This is a tool for DJs interested in harmonic mixing,
-          producers looking to remix songs, and anyone trying to understand their music a little better. </p>
+          <h1>Song Key & BPM Finder</h1>
+          <p>Upload your audio files to find the key and tempo of the tracks in your library.
+            This is a tool for DJs interested in harmonic mixing,
+            producers looking to remix songs, and anyone trying to understand their music a little better. </p>
         </div>
         <form onSubmit={handleSubmit}>
           <input type="file" onChange={handleFileChange} />
           <button type="submit">Analyze</button>
         </form>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        {result && (
-          <div className={styles.results}>
-            <p>BPM: {result.BPM}</p>
-            <p>Key: {result.Key}</p>
-          </div>
-        )}
+        <div className={styles.results}>
+          {results.map((result, index) => (
+            <div key={index} className={styles.result}>
+              <p>BPM: {result.BPM}</p>
+              <p>Key: {result.Key}</p>
+              <p>Camelot: {result.Camelot}</p>
+            </div>
+          ))}
+        </div>
       </div>
       <div className={styles.analyzeContent}>
-        <h2>what to do</h2>
+        <h2>What to do</h2>
       </div>
     </div>
   );
