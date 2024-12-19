@@ -20,5 +20,6 @@ def check_daily_limit():
         "timestamp": {"$gte": one_day_ago}
     }))
 
+
     # Check if user has exceeded the daily limit
-    return len(recent_uploads) < 1000
+    return len(recent_uploads) < 100
