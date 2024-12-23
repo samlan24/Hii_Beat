@@ -46,9 +46,6 @@ def create_app():
     from .bpm_analysis import bpm
     app.register_blueprint(bpm)
 
-    from .bpm_change import bpm_change
-    app.register_blueprint(bpm_change)
-
     from .conversion import conversion
     app.register_blueprint(conversion)
 
