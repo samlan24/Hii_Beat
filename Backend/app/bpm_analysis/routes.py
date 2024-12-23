@@ -4,7 +4,8 @@ from . import bpm
 import essentia.standard as es
 from datetime import datetime
 import os
- # Import the helper function
+
+""" route to analyze the BPM and key of an uploaded audio file """
 
 ALLOWED_EXTENSIONS = {'wav', 'mp3', 'flac'}
 
@@ -20,7 +21,7 @@ def analyze():
     uploads_collection = db.uploads
 
     # Check if user has exceeded the daily upload limit using the helper function
-    if not check_daily_limit():  # This will handle session ID creation and limit checking
+    if not check_daily_limit():
         return jsonify({"error": "Daily upload limit reached. Try again tomorrow."}), 403
 
     # Process the uploaded file
@@ -51,8 +52,8 @@ def analyze():
             "Key": key
         }
 
-        # Add the current upload to MongoDB
-        session_id = session.get('session_id')  # Get session ID from session
+        """Add the current upload to MongoDB"""
+        session_id = session.get('session_id')
         uploads_collection.insert_one({
             "session_id": session_id,
             "timestamp": datetime.utcnow(),
@@ -60,7 +61,7 @@ def analyze():
         })
 
     finally:
-        # Cleanup the uploaded file
+        """Cleanup the uploaded file"""
         if os.path.exists(file_path):
             os.remove(file_path)
 
