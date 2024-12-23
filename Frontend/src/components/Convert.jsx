@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import styles from './Convert.module.css'
+import styles from './Convert.module.css';
 
 const ConvertAudio = () => {
   const [file, setFile] = useState(null);
   const [targetFormat, setTargetFormat] = useState('mp3'); // Default target format
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -24,6 +25,10 @@ const ConvertAudio = () => {
       return;
     }
 
+    setLoading(true);
+    setError('');
+    setResult(null);
+
     const formData = new FormData();
     formData.append('file', file);
     formData.append('target_format', targetFormat); // Send target format to the backend
@@ -36,25 +41,28 @@ const ConvertAudio = () => {
         withCredentials: true,
       });
       setResult(response.data);
-      setError('');
     } catch (err) {
       console.error('There was an error converting the audio:', err);
       setError(err.response?.data?.error || 'An error occurred');
-      setResult(null);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
+    <div className={styles.pageContainer}>
       <div className={styles.convert}>
         <h1>Convert Audio Files</h1>
-        <form onSubmit={handleSubmit}>
+        <p className={styles.fileInfo}>
+          Upload audio files in formats like <strong>MP3, WAV, FLAC, AAC,</strong> and more. Convert them to your desired format in just a few clicks!
+        </p>
+        <form onSubmit={handleSubmit} className={styles.convertForm}>
           <input
             type="file"
             accept="audio/*"
             onChange={handleFileChange}
           />
-          <div>
+          <div className={styles.formatSelector}>
             <label htmlFor="format">Select target format:</label>
             <select
               id="format"
@@ -68,21 +76,30 @@ const ConvertAudio = () => {
               <option value="ogg">OGG</option>
             </select>
           </div>
-          <button type="submit">Convert Audio</button>
+          <button type="submit" className={styles.submitButton} disabled={loading}>
+            {loading ? 'Converting...' : 'Convert Audio'}
+          </button>
         </form>
-
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {result && result.success && (
-          <div>
-            <p>Audio converted successfully!</p>
-            <a href={`http://localhost:5000${result.download_link}`} download>
-              Download Converted {targetFormat.toUpperCase()}
-            </a>
-          </div>
-        )}
+        <div className={styles.outputBox}>
+          {loading && <div className={styles.loader}></div>}
+          {error && <p className={styles.errorMessage}>{error}</p>}
+          {result && result.success && (
+            <div>
+              <p className={styles.successMessage}>Audio converted successfully!</p>
+              <a
+                href={`http://localhost:5000${result.download_link}`}
+                download
+                className={styles.downloadLink}
+              >
+                Download Converted {targetFormat.toUpperCase()}
+              </a>
+            </div>
+          )}
+        </div>
       </div>
       <div className={styles.convertContent}>
-        <h2>What to do</h2>
+        <h2>How to Use</h2>
+        <p>Upload an audio file, choose the desired format, and click "Convert Audio" to get your converted file.</p>
       </div>
     </div>
   );

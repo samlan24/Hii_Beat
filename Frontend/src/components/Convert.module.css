@@ -1,14 +1,151 @@
-.convert{
+.pageContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     height: 100vh;
+    padding: 2rem;
+    background: linear-gradient(135deg, #eef2f3, #dce3e6);
+    color: #333;
 }
 
-.convertContent{
+.convert {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.convert h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #444;
+    text-align: center;
+}
+
+.convertForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    align-items: center;
+}
+
+.fileInfo {
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    text-align: center;
+    color: #555;
+}
+
+
+.formatSelector {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.submitButton {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.submitButton:disabled {
+    background: #9ccc9c;
+    cursor: not-allowed;
+}
+
+.submitButton:hover:enabled {
+    background: #45a049;
+}
+
+.outputBox {
+    width: 100%;
+    min-height: 100px;
+    background: #f1f1f1;
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.errorMessage {
+    color: #e74c3c;
+    font-weight: bold;
+    text-align: center;
+}
+
+.successMessage {
+    color: #2ecc71;
+    font-weight: bold;
+    text-align: center;
+}
+
+.downloadLink {
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 0.5rem;
+}
+
+.downloadLink:hover {
+    text-decoration: underline;
+}
+
+.convertContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.convertContent h2 {
+    margin-bottom: 0.5rem;
+    color: #444;
+}
+
+.convertContent p {
+    text-align: center;
+    color: #555;
+}
+
+/* Loading Icon */
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #4caf50;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
