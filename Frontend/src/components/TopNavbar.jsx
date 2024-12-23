@@ -7,8 +7,9 @@ const TopNavbar = () => {
   return (
     <nav className={styles.navbar}>
       <ul>
-        <li><Link to="/analyze">Analyze</Link></li>
-        <li><Link to="/convert">Convert Audio</Link></li>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/analyze">Bpm&key</Link></li>
+        <li><Link to="/convert">Audio Converter</Link></li>
       </ul>
     </nav>
   );
