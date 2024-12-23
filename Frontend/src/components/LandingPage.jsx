@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './LandingPage.module.css';
-import analyzeImage from '../assets/dj.jpg'; // Example image import
-import convertImage from '../assets/dj2.jpg'; // Example image import
-import searchImage from '../assets/viny.jpg'; // Example image import
+import analyzeImage from '../assets/dj.jpg';
+import convertImage from '../assets/dj2.jpg';
+import searchImage from '../assets/viny.jpg';
 
 const LandingPage = () => {
   return (
