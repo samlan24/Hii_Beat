@@ -7,6 +7,7 @@ const ChangeAudioPage = () => {
   const [transposeSteps, setTransposeSteps] = useState(0);
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // New state for loading
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -24,6 +25,10 @@ const ChangeAudioPage = () => {
     formData.append('file', file);
     formData.append('transpose_steps', transposeSteps);
 
+    setLoading(true); // Start loading
+    setError('');
+    setResult(null);
+
     try {
       const response = await axios.post('http://localhost:5000/transpose', formData, {
         headers: {
@@ -32,11 +37,11 @@ const ChangeAudioPage = () => {
         withCredentials: true,
       });
       setResult(response.data);
-      setError('');
     } catch (err) {
       console.error('There was an error processing the audio:', err);
       setError(err.response?.data?.error || 'An error occurred');
-      setResult(null);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -75,9 +80,9 @@ const ChangeAudioPage = () => {
           <button
             type="submit"
             className={styles.submitButton}
-            disabled={!file}
+            disabled={!file || loading} // Disable button when loading
           >
-            Transpose
+            {loading ? <div className={styles.loader}></div> : 'Transpose'}
           </button>
         </form>
 
