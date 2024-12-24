@@ -4,7 +4,7 @@ import styles from './Change.module.css';
 
 const ChangeAudioPage = () => {
   const [file, setFile] = useState(null);
-  const [transposeSteps, setTransposeSteps] = useState(0);  // Default to no transpose
+  const [transposeSteps, setTransposeSteps] = useState(0);
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
 
@@ -41,30 +41,67 @@ const ChangeAudioPage = () => {
   };
 
   return (
-    <div className={styles.change}>
-      <h1 className={styles.heading}>Transpose Audio</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="file" accept="audio/mp3, audio/wav" onChange={handleFileChange} />
-        <div>
-          <label>Transpose Steps (+/-):</label>
-          <input
-            type="number"
-            value={transposeSteps}
-            onChange={(e) => setTransposeSteps(parseInt(e.target.value))}
-          />
-        </div>
-        <button type="submit">Transpose Audio</button>
-      </form>
+    <div className={styles.pageContainer}>
+      <div className={styles.analyze}>
+        <header className={styles.header}>
+          <h1>Transpose Audio</h1>
+          <p>Upload your audio file and adjust the pitch easily.</p>
+        </header>
+        <form onSubmit={handleSubmit} className={styles.uploadForm}>
+          <div>
+            <label htmlFor="file" className={styles.label}>
+              Select File:
+            </label>
+            <input
+              id="file"
+              type="file"
+              accept="audio/mp3, audio/wav"
+              onChange={handleFileChange}
+              className={styles.fileInput}
+            />
+          </div>
+          <div>
+            <label htmlFor="steps" className={styles.label}>
+              Transpose Steps (+/-):
+            </label>
+            <input
+              id="steps"
+              type="number"
+              value={transposeSteps}
+              onChange={(e) => setTransposeSteps(parseInt(e.target.value, 10))}
+              className={styles.numberInput}
+            />
+          </div>
+          <button
+            type="submit"
+            className={styles.submitButton}
+            disabled={!file}
+          >
+            Transpose
+          </button>
+        </form>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {result && result.success && (
-        <div>
-          <p>Audio processed successfully!</p>
-          <a href={`http://localhost:5000${result.download_link}`} download>
-            Download Modified Audio
-          </a>
-        </div>
-      )}
+        {error && <p className={styles.errorMessage}>{error}</p>}
+
+        {result && (
+          <div className={styles.outputBox}>
+            {result.success ? (
+              <div className={styles.results}>
+                <p>Audio processed successfully!</p>
+                <a
+                  href={`http://localhost:5000${result.download_link}`}
+                  download
+                  className={styles.downloadLink}
+                >
+                  Download Modified Audio
+                </a>
+              </div>
+            ) : (
+              <p className={styles.errorMessage}>Processing failed. Try again.</p>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

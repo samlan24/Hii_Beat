@@ -31,7 +31,7 @@ const ConvertAudio = () => {
 
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('target_format', targetFormat); // Send target format to the backend
+    formData.append('target_format', targetFormat);
 
     try {
       const response = await axios.post('http://localhost:5000/convert', formData, {

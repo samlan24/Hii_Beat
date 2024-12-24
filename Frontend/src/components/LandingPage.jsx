@@ -66,25 +66,25 @@ const LandingPage = () => {
       {/* Search Section */}
       <section className={`${styles.featureSection} ${styles.reverse}`}>
         <div className={styles.content}>
-          <h2 className={styles.sectionTitle}>Search Songs</h2>
+          <h2 className={styles.sectionTitle}>Change Pitch</h2>
           <ol className={styles.steps}>
             <li className={styles.step}>
               <span className={styles.stepNumber}>1</span>
-              Enter the name of the song or artist.
+              Add an audio file (MP3, WAV, or AAC)
             </li>
             <li className={styles.step}>
               <span className={styles.stepNumber}>2</span>
-              Let the app fetch song details.
+              Let the app process the audio
             </li>
             <li className={styles.step}>
               <span className={styles.stepNumber}>3</span>
-              Get BPM, key for your searched track.
+              Download the transposed song
             </li>
           </ol>
-          <Link to="/search" className={styles.link}>Search Songs</Link>
+          <Link to="/change" className={styles.link}>Change Now</Link>
         </div>
         <div className={styles.imageWrapper}>
-          <img src={searchImage} alt="Search Songs" className={styles.image} />
+          <img src={searchImage} alt="change BPM" className={styles.image} />
         </div>
       </section>
 

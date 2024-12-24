@@ -10,7 +10,7 @@ const TopNavbar = () => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/analyze">Bpm&key</Link></li>
         <li><Link to="/convert">Audio Converter</Link></li>
-        <li><Link to="/change">Change Audio</Link></li>
+        <li><Link to="/change">Change Pitch</Link></li>
       </ul>
     </nav>
   );
