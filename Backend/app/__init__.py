@@ -40,8 +40,8 @@ def create_app():
     if not os.path.exists(CONVERT_FOLDER):
         os.makedirs(CONVERT_FOLDER)
 
-    from .auth import auth
-    app.register_blueprint(auth)
+    from .bpm_change import bpm_change
+    app.register_blueprint(bpm_change)
 
     from .bpm_analysis import bpm
     app.register_blueprint(bpm)
