@@ -49,4 +49,7 @@ def create_app():
     from .conversion import conversion
     app.register_blueprint(conversion)
 
+    from .spotify import spoti
+    app.register_blueprint(spoti)
+
     return app
