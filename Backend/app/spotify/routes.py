@@ -17,7 +17,8 @@ def search_songs():
                 "album": item['album']['name'],
                 "release_date": item['album']['release_date'],
                 "duration_ms": item['duration_ms'],
-                "preview_url": item.get('preview_url')
+                "preview_url": item.get('preview_url'),
+                "spotify_id": item['id'],
             }
             for item in search_results['tracks']['items']
         ]
