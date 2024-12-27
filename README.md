@@ -70,5 +70,44 @@ Follow the [Essentia installation guide](https://essentia.upf.edu/installing.htm
 
 Follow the [FFmpeg installation guide](https://www.hostinger.com/tutorials/how-to-install-ffmpeg) for your platform.
 
+## 3.Frontend Setup (React with Vite)
 
+- **Navigate to the frontend directory**
 
+```bash
+cd Frontend
+```
+
+- **Install Node.js dependencies**
+
+```bash
+npm install
+```
+
+## 4.Run the Application
+
+- **Start MongoDB**
+
+Ensure your MongoDB server is running. You can start it with:
+
+```bash
+mongosh
+```
+
+- **Run the Flask backend**
+
+```bash
+python3 run.py
+```
+
+- **Run the React frontend**
+
+```bash
+npm run dev
+```
+
+Now you can access the app via `http://localhost:5173/`
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
