@@ -63,7 +63,7 @@ Librosa can be installed via pip:
 pip install librosa
 ```
 
-YFollow the [Librosa installation guide](https://librosa.org/doc/0.10.2/install.html) for your platform.
+Follow the [Librosa installation guide](https://librosa.org/doc/0.10.2/install.html) for your platform.
 
 - **Install Essentia**
 
