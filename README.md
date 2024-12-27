@@ -20,17 +20,19 @@ Before you start, ensure you have the following installed:
 
 Follow these steps to set up the application:
 
-1. Clone the Repository and ```cd``` into it
+### 1. Clone the Repository and ```cd``` into it
 
-2. Setup the Backend
+### 2. Setup the Backend
 
-  a. Create a virtual environment
+- Create a virtual environment
 
 ```bash
 python3 -m venv venv
 ```
 
-Activate the virtual environment
+- Activate the virtual environment
+
+Choose your system:
 
  - Linux/MacOS
 
