@@ -4,8 +4,8 @@ This is a full-stack web application for analyzing and processing audio files. T
 
 ## Features
 
--- Upload and analyze audio files (up to 10MB, less than 4 minutes long).
--- Retrieve song data such as BPM, key, and other attributes using audio analysis tools.
--- Separate vocals from instrumentals.
--- Convert audio formats (MP3, WAV, M4A).
+- Upload and analyze audio files (up to 10MB, less than 4 minutes long).
+- Retrieve song data such as BPM, key, and other attributes using audio analysis tools.
+- Separate vocals from instrumentals.
+- Convert audio formats (MP3, WAV, M4A).
 
