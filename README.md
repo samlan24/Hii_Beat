@@ -96,11 +96,15 @@ mongosh
 
 - **Run the Flask backend**
 
+Open a new terminal and navigate to the backend `cd Backend` then run the app with the below command:
+
 ```bash
 python3 run.py
 ```
 
 - **Run the React frontend**
+
+Open a new terminal and navigate to the frontend `cd Frontend` then run the app with the below command:
 
 ```bash
 npm run dev
