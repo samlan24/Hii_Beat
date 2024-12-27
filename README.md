@@ -6,6 +6,24 @@ This is a full-stack web application for analyzing and processing audio files. T
 
 - Upload and analyze audio files (up to 10MB, less than 4 minutes long).
 - Retrieve song data such as BPM, key, and other attributes using audio analysis tools.
-- Separate vocals from instrumentals.
+- Change pitch of a song without affecting BPM.
 - Convert audio formats (MP3, WAV, M4A).
 
+## Prerequisites
+
+Before you start, ensure you have the following installed:
+
+- Python 3.8+
+- MongoDB
+
+## Installation
+
+Follow these steps to set up the application:
+
+1. Clone the Repository
+
+2. Setup the Backend
+
+```bash
+python3 -m venv venv
+```
