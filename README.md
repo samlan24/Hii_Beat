@@ -2,6 +2,9 @@
 
 This is a full-stack web application for analyzing and processing audio files. The backend is built with Flask and integrates powerful audio processing libraries like Essentia, Librosa, and FFmpeg. The front end is built with React (using Vite) for a seamless user experience.
 
+![hiibeat](/Frontend/src/assets/hiibeat.png "HiiBeat")
+
+
 ## Features
 
 - Upload and analyze audio files (up to 10MB, less than 4 minutes long).
@@ -60,7 +63,7 @@ Librosa can be installed via pip:
 pip install librosa
 ```
 
-You can find more info [here](https://librosa.org/doc/0.10.2/install.html)
+YFollow the [Librosa installation guide](https://librosa.org/doc/0.10.2/install.html) for your platform.
 
 - **Install Essentia**
 
