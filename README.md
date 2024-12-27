@@ -24,13 +24,13 @@ Follow these steps to set up the application:
 
 ### 2. Setup the Backend
 
-- Create a virtual environment
+**- Create a virtual environment**
 
 ```bash
 python3 -m venv venv
 ```
 
-- Activate the virtual environment
+**- Activate the virtual environment**
 
 Choose your system:
 
@@ -45,5 +45,30 @@ source venv/bin/activate
 ```bash
 venv\Scripts\activate
 ```
+
+**- Install Python dependencies**
+
+```bash
+pip install -r requirements.txt
+```
+
+**- Install Librosa**
+
+Librosa can be installed via pip:
+
+```bash
+pip install librosa
+```
+
+You can find more info [here](https://librosa.org/doc/0.10.2/install.html)
+
+**- Install Essentia**
+
+Follow the [Essentia installation guide](https://essentia.upf.edu/installing.html) for your platform.
+
+**- Install FFmpeg**
+
+Follow the [FFmpeg installation guide](https://www.hostinger.com/tutorials/how-to-install-ffmpeg) for your platform.
+
 
 
