@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
-from flask_session import Session  # Import Flask-Session
+from flask_session import Session
 from pymongo import MongoClient
 import os
 from datetime import timedelta
@@ -13,27 +13,27 @@ def create_app():
 
     app.secret_key = "hello"
 
-    # Configure Flask-Session
-    app.config['SESSION_TYPE'] = 'mongodb'  # Use MongoDB for session storage
-    app.config['SESSION_MONGODB'] = mongo_client  # Your MongoDB client instance
-    app.config['SESSION_PERMANENT'] = True  # Set to True if you want persistent sessions
+
+    app.config['SESSION_TYPE'] = 'mongodb'
+    app.config['SESSION_MONGODB'] = mongo_client
+    app.config['SESSION_PERMANENT'] = True
     app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
 
-    # Initialize the session extension
+
     Session(app)
 
-    # Connect to MongoDB
+
     MONGO_URI = "mongodb://localhost:27017/project"
     client = MongoClient(MONGO_URI)
     app.config['db'] = client.get_database('project')
 
-    # Define the upload folder path
+
     UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     CONVERT_FOLDER = os.path.join(app.root_path, 'static', 'converted')
     app.config['CONVERT_FOLDER'] = CONVERT_FOLDER
 
-    # Ensure the upload folder exists
+
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
 

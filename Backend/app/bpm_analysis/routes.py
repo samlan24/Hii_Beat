@@ -20,11 +20,11 @@ def analyze():
     db = current_app.config['db']
     uploads_collection = db.uploads
 
-    # Check if user has exceeded the daily upload limit using the helper function
+
     if not check_daily_limit():
         return jsonify({"error": "Daily upload limit reached. Try again tomorrow."}), 403
 
-    # Process the uploaded file
+
     if 'file' not in request.files:
         return jsonify({"error": "No file uploaded"}), 400
 
@@ -39,7 +39,7 @@ def analyze():
     file.save(file_path)
 
     try:
-        # Perform BPM and key analysis
+
         audio = es.MonoLoader(filename=file_path)()
         rhythm_extractor = es.RhythmExtractor2013(method="multifeature")
         bpm_value, beats, beats_confidence, _, beats_intervals = rhythm_extractor(audio)
