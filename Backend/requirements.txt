@@ -1,1 +1,8 @@
-flask
+Flask==3.0.3
+Flask-Session==0.8.0
+Flask-Cors==5.0.0
+essentia==2.1b6.dev1110
+ffmpeg-python==0.2.0
+librosa==0.10.2.post1
+Werkzeug==3.0.3
+pymongo==4.10.1
