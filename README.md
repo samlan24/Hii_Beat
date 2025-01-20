@@ -94,6 +94,8 @@ npm install
 Ensure your MongoDB server is running. You can start it with:
 
 ```bash
+sudo systemctl start mongod
+
 mongosh
 ```
 
